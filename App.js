@@ -1,37 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import useLoadFonts from "./hooks/helpers/useLoadFonts";
-import { COLORS } from "./constants";
+import { NavigationContainer } from "@react-navigation/native";
+import StackNavigator from "./routes/StackNavigator";
+import AppLoader from "./components/AppLoader";
 
 export default function App() {
   const fontsLoaded = useLoadFonts();
 
+  console.log("APP RENDER");
+
   if (!fontsLoaded) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={COLORS.second} />
-      </View>
-    );
+    return <AppLoader />;
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={{ fontFamily: "Inter-Regular", fontSize: 20 }}>
-        Hello with custom font!
-      </Text>
-      <Text style={{ fontFamily: "Inter-Bold", fontSize: 22 }}>
-        This is bold text
-      </Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
